@@ -24,11 +24,15 @@ export default {
 
   mounted () {
     this.mde = new SimpleMDE({
+      autoDownloadFontAwesome: false,
       element: document.getElementById('content'),
       toolbar: [
         'bold', 'italic', 'heading', 'quote', 'unordered-list', 'ordered-list', 
         'link', 'image', 'table', 'code', 'fullscreen', 'preview', 'guide'
-      ]
+      ],
+      renderingConfig: {
+        codeSyntaxHighlighting: true
+      }
     })
   },
 
