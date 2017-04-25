@@ -1,11 +1,14 @@
 var path = require('path')
 var webpack = require('webpack')
+var CompressionWebpackPlugin = require('compression-webpack-plugin')
+
+var productionGzipExtensions = ['js', 'css']
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: 'dist/',
     filename: 'build.js'
   },
   module: {
@@ -69,6 +72,17 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+        '\\.(' +
+        productionGzipExtensions.join('|') +
+        ')$'
+      ),
+      threshold: 10240,
+      minRatio: 0.8
     })
   ])
 }
